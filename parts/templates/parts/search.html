@@ -1,0 +1,98 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Поиск запчастей</title>
+</head>
+<body>
+    <h1>Поиск запчастей</h1>
+
+    <form method="post" action="{% url 'search_parts' %}">
+        {% csrf_token %}
+        <label for="article">Введите артикул:</label>
+        <input type="text" id="article" name="article" required>
+        <button type="submit">Поиск</button>
+    </form>
+
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+
+    {% if results %}
+        <h2>Результаты:</h2>
+        <table border="1">
+            <tr>
+                <th>Артикул</th>
+                <th>Количество</th>
+                <th>Цена</th>
+                <th>Срок доставки</th>
+                <th>Ссылка</th>
+            </tr>
+            {% for item in results %}
+                <tr>
+                    <td>{{ item.article }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.price }}</td>
+                    <td>{{ item.delivery_time }}</td>
+                    <td><a href="{{ item.link }}" target="_blank">Ссылка</a></td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Поиск запчастей</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Поиск запчастей</h1>
+        <form method="POST" class="mt-4">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="article" class="form-label">Введите артикул:</label>
+                <input type="text" class="form-control" id="article" name="article" placeholder="Пример: 1400010770" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Искать</button>
+        </form>
+
+        {% if error %}
+            <div class="alert alert-danger mt-3">{{ error }}</div>
+        {% endif %}
+
+        {% if results %}
+            <h2 class="mt-5">Результаты:</h2>
+            <table class="table table-striped mt-3">
+                <thead>
+                    <tr>
+                        <th>Артикул</th>
+                        <th>Количество</th>
+                        <th>Цена</th>
+                        <th>Дата доставки</th>
+                        <th>Время доставки</th>
+                        <th>Ссылка</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for result in results %}
+                    <tr>
+                        <td>{{ result.article }}</td>
+                        <td>{{ result.quantity }}</td>
+                        <td>{{ result.price }}</td>
+                        <td>{{ result.delivery_date }}</td>
+                        <td>{{ result.delivery_time }}</td>
+                        <td><a href="{{ result.link }}" target="_blank">Перейти</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+</body>
+</html>
